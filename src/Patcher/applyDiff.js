@@ -1,7 +1,7 @@
-import createNode from './createNode.js'
+import createNode from '../MixedDOM/createNode.js'
 
 export default function applyDiff(container, diff) {
-  console.log(diff)
+  // console.log(diff)
 
   for (const action of diff) {
     const index = action.path[action.path.length - 1]
