@@ -1,0 +1,27 @@
+{
+  "name": "@adrianhelvik/vdom",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Adrian Helvik <adrian.helvik@specifique.no>",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.6.2",
+    "@babel/core": "^7.6.2",
+    "@babel/preset-env": "^7.6.2",
+    "@babel/preset-react": "^7.0.0",
+    "jest": "^24.9.0"
+  },
+  "scripts": {
+    "start": "jest --watch",
+    "test": "jest"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      ["@babel/preset-react", {
+        "pragma": "createElement",
+        "pragmaFrag": "createElement.Fragment"
+      }]
+    ]
+  }
+}
