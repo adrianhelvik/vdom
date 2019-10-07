@@ -258,10 +258,7 @@ it('can append a fragment', () => {
 
   container.appendChild(wrapper)
 
-  console.log('inserting a')
   inner1.appendChild(Node.createElement('a'))
-
-  console.log('inserting b')
   inner1.appendChild(Node.createElement('b'))
   wrapper.appendChild(inner1)
 
