@@ -1,4 +1,4 @@
-import Node, { wrap, unwrap, Element, Fragment, Text } from './Node.js'
+import Node, { wrap, unwrap, Element, Fragment, Text, debug } from './Node.js'
 
 describe('constructors', () => {
   it('can create an element node', () => {
@@ -68,7 +68,7 @@ describe('appendChild()', () => {
   })
 
   it('can append a text node', () => {
-    const fragment = Node.createElement()
+    const fragment = Node.createFragment()
 
     fragment.appendChild(Node.createText('Hello world'))
   })
@@ -256,18 +256,22 @@ it('can append a fragment', () => {
   const inner1 = Node.createFragment()
   const inner2 = Node.createFragment()
 
-  container.appendChild(wrapper)
+  debug(() => {
+    container.appendChild(wrapper)
 
-  inner1.appendChild(Node.createElement('a'))
-  inner1.appendChild(Node.createElement('b'))
-  wrapper.appendChild(inner1)
+    inner1.appendChild(Node.createElement('a'))
+    inner1.appendChild(Node.createElement('b'))
+    wrapper.appendChild(inner1)
 
-  inner2.appendChild(Node.createElement('c'))
-  inner2.appendChild(Node.createElement('d'))
-  wrapper.appendChild(inner2)
+    inner2.appendChild(Node.createElement('c'))
+    inner2.appendChild(Node.createElement('d'))
+    wrapper.appendChild(inner2)
+  })
 
   const virtual = tags(wrapper.flattenNodes())
   const domTags = tags(container)
+
+  console.log(container.toJSX())
 
   expect(virtual).toEqual(['a', 'b', 'c', 'd'])
   expect(domTags).toEqual(['a', 'b', 'c', 'd'])

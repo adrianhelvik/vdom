@@ -1,4 +1,15 @@
+let isDebugging = false
+
 const map = new WeakMap()
+
+export function debug(fn) {
+  isDebugging = true
+  try {
+    fn()
+  } finally {
+    isDebugging = false
+  }
+}
 
 export function wrap(node) {
   if (node instanceof Node) {
@@ -45,11 +56,47 @@ export default class Node {
     }
   }
 
+  toJSX() {
+    if (this instanceof Text) {
+      return `${this.textContent}`
+    }
+    if (this instanceof Fragment) {
+      return [
+        '<>',
+        indent(this.wrappedNode.map(n => n.toJSX()).join('\n')),
+        '</>',
+      ]
+        .filter(x => x.trim())
+        .join('\n')
+    }
+
+    if (this instanceof Element) {
+      return (
+        [
+          `<${this.tagName.toLowerCase()}>`,
+          indent(this.childNodes.map(n => n.toJSX()).join('\n')),
+          `</${this.tagName.toLowerCase()}>`,
+        ]
+          .filter(x => x.trim())
+          .join('\n') +
+        '\n(' +
+        this.outerHTML +
+        ')'
+      )
+    }
+
+    console.error('Could not format node:', this)
+    throw Error('Could not format node')
+  }
+
   static createText(text) {
     return new Text(document.createTextNode(text))
   }
 
   static createElement(type) {
+    if (typeof type !== 'string') {
+      throw Error('Can not call createElement without a string tag name')
+    }
     return new Element(document.createElement(type))
   }
 
@@ -70,6 +117,12 @@ export default class Node {
   }
 
   appendChild(node) {
+    if (isDebugging) {
+      var log = `appending:\n${indent(node.toJSX())}\n\nto:\n${indent(
+        this.toJSX(),
+      )}`
+    }
+
     if (node === this) {
       throw Error('Can not append node to self')
     }
@@ -82,6 +135,9 @@ export default class Node {
       this.wrappedNode.appendChild(unwrap(node))
     }
     this.childNodes.push(node)
+    if (isDebugging) {
+      console.log(`${log}\n\nresulting in:\n${indent(this.toJSX())}`)
+    }
   }
 
   remove() {
@@ -107,12 +163,28 @@ export default class Node {
 }
 
 export class Fragment extends Node {
+  get tagName() {
+    return '#fragment'
+  }
+
   constructor() {
     super([])
     this.parentNode = null
   }
 
   lastDomChild() {
+    const child = this._lastDomChild()
+
+    console.log(
+      `last DOM child in:\n${this.toJSX()}\nis:\n${
+        !child ? child : wrap(child).toJSX()
+      }`,
+    )
+
+    return child
+  }
+
+  _lastDomChild() {
     process.stdout.write('lastDomChild')
     const node = this.wrappedNode[this.wrappedNode.length - 1]
     if (!node) {
@@ -126,6 +198,12 @@ export class Fragment extends Node {
   }
 
   appendChild(node) {
+    if (isDebugging) {
+      var log = `appending:\n${indent(node.toJSX())}\n\nto:\n${indent(
+        this.toJSX(),
+      )}`
+    }
+
     if (node === this) {
       throw Error('Can not append node to self')
     }
@@ -133,24 +211,31 @@ export class Fragment extends Node {
     node.parentNode = this
     const container = this.parentElementNode()
     if (container) {
-      const domNodes = Array.from(container.wrappedNode.childNodes)
-      console.log(tags(domNodes))
+      const domNodes = Array.from(container.wrappedNode.childNodes).map(wrap)
       const elementBefore = this.lastDomChild()
       let next
 
       if (elementBefore) {
         const index = domNodes.indexOf(elementBefore)
-        console.log(index, elementBefore.tagName)
         next = domNodes[index + 1]
       }
 
       if (next) {
         if (node instanceof Fragment) {
           for (const child of node.flattenNodes()) {
-            container.wrappedNode.insertBefore(child.wrappedNode, next)
+            console.log(
+              '-- inserting --:\n' +
+                child.toJSX() +
+                '\n\n-- Before --:\n' +
+                wrap(next).toJSX(),
+            )
+            container.wrappedNode.insertBefore(
+              child.wrappedNode,
+              next.wrappedNode,
+            )
           }
         } else {
-          container.wrappedNode.insertBefore(node.wrappedNode, next)
+          container.wrappedNode.insertBefore(node.wrappedNode, next.wrappedNode)
         }
       } else {
         if (node instanceof Fragment) {
@@ -161,6 +246,14 @@ export class Fragment extends Node {
           container.wrappedNode.appendChild(node.wrappedNode)
         }
       }
+    }
+
+    if (isDebugging) {
+      console.log(
+        `${log}\n\nresulting in:\n${indent(this.toJSX())}\n\nas html: ${
+          this.outerHTML
+        }`,
+      )
     }
   }
 
@@ -217,6 +310,10 @@ export class Element extends Node {
 }
 
 export class Text extends Node {
+  get tagName() {
+    return '#text'
+  }
+
   get textContent() {
     return this.wrappedNode.textContent
   }
@@ -224,3 +321,9 @@ export class Text extends Node {
 
 const tags = childNodes =>
   Array.from(childNodes).map(node => node.tagName.toLowerCase())
+
+const indent = s =>
+  s
+    .split('\n')
+    .map(x => '  ' + x)
+    .join('\n')
