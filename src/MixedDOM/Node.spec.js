@@ -256,23 +256,39 @@ it('can append a fragment', () => {
   const inner1 = Node.createFragment()
   const inner2 = Node.createFragment()
 
-  debug(() => {
-    container.appendChild(wrapper)
+  container.appendChild(wrapper)
 
-    inner1.appendChild(Node.createElement('a'))
-    inner1.appendChild(Node.createElement('b'))
-    wrapper.appendChild(inner1)
+  inner1.appendChild(Node.createElement('a'))
+  inner1.appendChild(Node.createElement('b'))
+  wrapper.appendChild(inner1)
 
-    inner2.appendChild(Node.createElement('c'))
-    inner2.appendChild(Node.createElement('d'))
-    wrapper.appendChild(inner2)
-  })
+  inner2.appendChild(Node.createElement('c'))
+  inner2.appendChild(Node.createElement('d'))
+  wrapper.appendChild(inner2)
 
-  const virtual = tags(wrapper.flattenNodes())
-  const domTags = tags(container)
-
-  console.log(container.toJSX())
-
-  expect(virtual).toEqual(['a', 'b', 'c', 'd'])
-  expect(domTags).toEqual(['a', 'b', 'c', 'd'])
+  expect(container.inspect()).toBe(
+    [
+      '<div>',
+      '  <>',
+      '    <>',
+      '      <a>',
+      '      </a>',
+      '      (<a></a>)',
+      '      <b>',
+      '      </b>',
+      '      (<b></b>)',
+      '    </>',
+      '    <>',
+      '      <c>',
+      '      </c>',
+      '      (<c></c>)',
+      '      <d>',
+      '      </d>',
+      '      (<d></d>)',
+      '    </>',
+      '  </>',
+      '</div>',
+      '(<div><a></a><b></b><c></c><d></d></div>)',
+    ].join('\n'),
+  )
 })

@@ -12,6 +12,9 @@ export function debug(fn) {
 }
 
 export function wrap(node) {
+  if (!node) {
+    return node
+  }
   if (node instanceof Node) {
     return node
   }
@@ -56,14 +59,22 @@ export default class Node {
     }
   }
 
-  toJSX() {
+  inspectInline() {
+    return this.inspect({ inline: true })
+  }
+
+  inspect({ inline = false } = {}) {
     if (this instanceof Text) {
       return `${this.textContent}`
     }
     if (this instanceof Fragment) {
       return [
         '<>',
-        indent(this.wrappedNode.map(n => n.toJSX()).join('\n')),
+        (inline ? x => x : indent)(
+          this.wrappedNode
+            .map(n => n.inspect({ inline }))
+            .join(inline ? '' : '\n'),
+        ),
         '</>',
       ]
         .filter(x => x.trim())
@@ -74,12 +85,16 @@ export default class Node {
       return (
         [
           `<${this.tagName.toLowerCase()}>`,
-          indent(this.childNodes.map(n => n.toJSX()).join('\n')),
+          (inline ? x => x : indent)(
+            this.childNodes
+              .map(n => n.inspect({ inline }))
+              .join(inline ? '' : '\n'),
+          ),
           `</${this.tagName.toLowerCase()}>`,
         ]
           .filter(x => x.trim())
-          .join('\n') +
-        '\n(' +
+          .join(inline ? '' : '\n') +
+        (inline ? ' (' : '\n(') +
         this.outerHTML +
         ')'
       )
@@ -118,8 +133,8 @@ export default class Node {
 
   appendChild(node) {
     if (isDebugging) {
-      var log = `appending:\n${indent(node.toJSX())}\n\nto:\n${indent(
-        this.toJSX(),
+      var log = `appending:\n${indent(node.inspect())}\n\nto:\n${indent(
+        this.inspect(),
       )}`
     }
 
@@ -129,6 +144,9 @@ export default class Node {
     node.parentNode = this
     if (node instanceof Fragment) {
       for (const node of node.flattenNodes()) {
+        if (isDebugging) {
+          console.log('Appending a node from fragment:', node.inspect())
+        }
         this.wrappedNode.appendChild(unwrap(node))
       }
     } else {
@@ -136,7 +154,7 @@ export default class Node {
     }
     this.childNodes.push(node)
     if (isDebugging) {
-      console.log(`${log}\n\nresulting in:\n${indent(this.toJSX())}`)
+      console.log(`${log}\n\nresulting in:\n${indent(this.inspect())}`)
     }
   }
 
@@ -172,35 +190,30 @@ export class Fragment extends Node {
     this.parentNode = null
   }
 
-  lastDomChild() {
-    const child = this._lastDomChild()
-
-    console.log(
-      `last DOM child in:\n${this.toJSX()}\nis:\n${
-        !child ? child : wrap(child).toJSX()
-      }`,
-    )
-
-    return child
+  firstElementInLastFragment() {
+    if (this.wrappedNode[this.wrappedNode.length - 1] instanceof Fragment) {
+      return this.wrappedNode[this.wrappedNode.length - 1].firstDomChild()
+    } else {
+      return this.wrappedNode[this.wrappedNode.length - 1]
+    }
   }
 
-  _lastDomChild() {
-    process.stdout.write('lastDomChild')
-    const node = this.wrappedNode[this.wrappedNode.length - 1]
+  firstDomChild() {
+    const node = this.wrappedNode[0]
     if (!node) {
       return null
     }
     if (node instanceof Fragment) {
-      return node.lastDomChild()
+      return node.wrappedNode[0].firstDomChild()
     } else {
-      return node.wrappedNode
+      return node.wrappedNode[0]
     }
   }
 
   appendChild(node) {
     if (isDebugging) {
-      var log = `appending:\n${indent(node.toJSX())}\n\nto:\n${indent(
-        this.toJSX(),
+      var log = `appending:\n${indent(node.inspect())}\n\nto:\n${indent(
+        this.inspect(),
       )}`
     }
 
@@ -212,23 +225,46 @@ export class Fragment extends Node {
     const container = this.parentElementNode()
     if (container) {
       const domNodes = Array.from(container.wrappedNode.childNodes).map(wrap)
-      const elementBefore = this.lastDomChild()
+      const lastElement = this.firstElementInLastFragment()
+      if (isDebugging) {
+        console.log(
+          'last element:',
+          lastElement && wrap(lastElement).inspectInline(),
+        )
+      }
       let next
 
-      if (elementBefore) {
-        const index = domNodes.indexOf(elementBefore)
-        next = domNodes[index + 1]
+      if (lastElement) {
+        const index = domNodes.indexOf(lastElement)
+        if (isDebugging) {
+          console.log(
+            'last element:',
+            wrap(lastElement).inspectInline(),
+            'in',
+            domNodes.map(wrap).map(x => x.inspectInline()),
+          )
+        }
+        if (index < domNodes.length) {
+          if (isDebugging) {
+            console.log(domNodes.map(x => wrap(x).inspectInline()))
+          }
+          next = domNodes[index + 1]
+        }
       }
 
       if (next) {
         if (node instanceof Fragment) {
           for (const child of node.flattenNodes()) {
-            console.log(
-              '-- inserting --:\n' +
-                child.toJSX() +
-                '\n\n-- Before --:\n' +
-                wrap(next).toJSX(),
-            )
+            if (isDebugging) {
+              console.trace(
+                '\n-- Inserting --:\n' +
+                  child.inspect() +
+                  '\n\n-- Before --:\n' +
+                  wrap(next).inspect() +
+                  '\n\n-- Inside --:\n' +
+                  wrap(container).inspect(),
+              )
+            }
             container.wrappedNode.insertBefore(
               child.wrappedNode,
               next.wrappedNode,
@@ -250,7 +286,7 @@ export class Fragment extends Node {
 
     if (isDebugging) {
       console.log(
-        `${log}\n\nresulting in:\n${indent(this.toJSX())}\n\nas html: ${
+        `${log}\n\nresulting in:\n${indent(this.inspect())}\n\nas html: ${
           this.outerHTML
         }`,
       )
