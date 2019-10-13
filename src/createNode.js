@@ -9,15 +9,10 @@ export default function createNode(virtualNode) {
     return document.createTextNode(virtualNode)
   }
 
-  try {
-    var node =
-      virtualNode.type === createElement.Fragment
-        ? document.createFragment()
-        : document.createElement(virtualNode.type)
-  } catch (e) {
-    console.log(virtualNode)
-    throw e
-  }
+  const node =
+    virtualNode.type === createElement.Fragment
+      ? document.createFragment()
+      : document.createElement(virtualNode.type)
 
   for (const key of Object.keys(virtualNode.props || {})) {
     if (key !== 'children') {
