@@ -1,6 +1,6 @@
 {
   "name": "@adrianhelvik/vdom",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/index.js",
   "module": "src/index.js",
   "author": "Adrian Helvik <adrian.helvik@specifique.no>",
@@ -14,7 +14,7 @@
   },
   "scripts": {
     "start": "jest --watch",
-    "test": "jest",
+    "test": "jest --coverage",
     "build": "rm -r dist; babel src --out-dir dist --ignore '**/*.spec.js'",
     "prepublish": "npm run test && npm run build",
     "coveralls": "cat ./coverage/lcov.info | coveralls"
