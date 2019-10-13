@@ -1,0 +1,5 @@
+language: node_js
+node_js:
+  - current
+  - lts/*
+after_success: 'npm run coveralls'
