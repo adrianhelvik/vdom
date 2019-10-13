@@ -30,3 +30,18 @@ it('can mount an element', () => {
     ].join(''),
   )
 })
+
+it('can mount fragment nodes', () => {
+  mount(
+    <>
+      <h1>Hello world</h1>
+      Foo <>bar</>
+      <b>Baz</b>
+    </>,
+    document.querySelector('#root'),
+  )
+
+  expect(document.querySelector('#root').innerHTML).toBe(
+    ['<h1>Hello world</h1>', 'Foo bar', '<b>Baz</b>'].join(''),
+  )
+})
