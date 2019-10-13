@@ -1,6 +1,6 @@
 {
   "name": "@adrianhelvik/vdom",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "dist/index.js",
   "module": "src/index.js",
   "author": "Adrian Helvik <adrian.helvik@specifique.no>",
@@ -10,6 +10,7 @@
     "@babel/core": "^7.6.2",
     "@babel/preset-env": "^7.6.2",
     "@babel/preset-react": "^7.0.0",
+    "coveralls": "^3.0.7",
     "jest": "^24.9.0"
   },
   "scripts": {
@@ -32,7 +33,6 @@
     ]
   },
   "dependencies": {
-    "@adrianhelvik/fragdom": "^2.0.0",
-    "coveralls": "^3.0.7"
+    "@adrianhelvik/fragdom": "^2.0.1"
   }
 }
