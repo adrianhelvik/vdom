@@ -13,7 +13,10 @@
   },
   "scripts": {
     "start": "jest --watch",
-    "test": "jest"
+    "test": "jest",
+    "build": "rm -r dist; babel src --out-dir dist --ignore '**/*.spec.js'",
+    "prepublish": "npm run test && npm run build",
+    "coveralls": "cat ./coverage/lcov.info | coveralls"
   },
   "babel": {
     "presets": [
@@ -28,6 +31,7 @@
     ]
   },
   "dependencies": {
-    "@adrianhelvik/fragdom": "^2.0.0"
+    "@adrianhelvik/fragdom": "^2.0.0",
+    "coveralls": "^3.0.7"
   }
 }
