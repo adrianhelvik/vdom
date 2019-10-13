@@ -1,3 +1,5 @@
+import document from '@adrianhelvik/fragdom'
+
 export default function createNode(virtualNode) {
   if (typeof virtualNode === 'string') {
     return document.createTextNode(virtualNode)

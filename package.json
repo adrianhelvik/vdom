@@ -18,10 +18,16 @@
   "babel": {
     "presets": [
       "@babel/preset-env",
-      ["@babel/preset-react", {
-        "pragma": "createElement",
-        "pragmaFrag": "createElement.Fragment"
-      }]
+      [
+        "@babel/preset-react",
+        {
+          "pragma": "createElement",
+          "pragmaFrag": "createElement.Fragment"
+        }
+      ]
     ]
+  },
+  "dependencies": {
+    "@adrianhelvik/fragdom": "^2.0.0"
   }
 }

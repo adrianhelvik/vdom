@@ -20,3 +20,20 @@ it('can replace a node based on its key', () => {
     { type: 'replace node', path: [0], node: <div key="b" /> },
   ])
 })
+
+it('removes the latter elements first', () => {
+  const diff = createDiff(
+    <div>
+      <h1>Hello world</h1>
+      <main>
+        <p>Foo bar</p>
+      </main>
+    </div>,
+    <div></div>,
+  )
+
+  expect(diff).toEqual([
+    { type: 'remove node', path: [0, 1] },
+    { type: 'remove node', path: [0, 0] },
+  ])
+})

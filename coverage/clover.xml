@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1570644635460" clover="3.2.0">
+  <project timestamp="1570644635460" name="All files">
+    <metrics statements="160" coveredstatements="145" conditionals="93" coveredconditionals="80" methods="38" coveredmethods="35" elements="291" coveredelements="260" complexity="0" loc="160" ncloc="160" packages="3" files="8" classes="8"/>
+    <package name="MixedDOM">
+      <metrics statements="113" coveredstatements="104" conditionals="57" coveredconditionals="49" methods="32" coveredmethods="29"/>
+      <file name="Node.js" path="/Users/adrianhelvik/Npm/@adrianhelvik/vdom/src/MixedDOM/Node.js">
+        <metrics statements="104" coveredstatements="98" conditionals="51" coveredconditionals="46" methods="31" coveredmethods="28"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="16" count="16" type="cond" truecount="1" falsecount="1"/>
+        <line num="20" count="16" type="cond" truecount="2" falsecount="0"/>
+        <line num="21" count="4" type="stmt"/>
+        <line num="23" count="12" type="cond" truecount="2" falsecount="0"/>
+        <line num="24" count="6" type="stmt"/>
+        <line num="26" count="11" type="stmt"/>
+        <line num="30" count="22" type="cond" truecount="2" falsecount="0"/>
+        <line num="31" count="21" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="38" count="6" type="cond" truecount="3" falsecount="0"/>
+        <line num="40" count="3" type="stmt"/>
+        <line num="42" count="2" type="stmt"/>
+        <line num="44" count="1" type="stmt"/>
+        <line num="50" count="74" type="cond" truecount="2" falsecount="0"/>
+        <line num="51" count="1" type="stmt"/>
+        <line num="53" count="73" type="stmt"/>
+        <line num="54" count="73" type="stmt"/>
+        <line num="55" count="73" type="cond" truecount="2" falsecount="0"/>
+        <line num="56" count="42" type="stmt"/>
+        <line num="57" count="3" type="stmt"/>
+        <line num="60" count="73" type="stmt"/>
+        <line num="112" count="8" type="stmt"/>
+        <line num="120" count="38" type="stmt"/>
+        <line num="124" count="21" type="stmt"/>
+        <line num="128" count="4" type="stmt"/>
+        <line num="132" count="1" type="stmt"/>
+        <line num="136" count="13" type="stmt"/>
+        <line num="147" count="17" type="cond" truecount="2" falsecount="0"/>
+        <line num="148" count="1" type="stmt"/>
+        <line num="150" count="16" type="stmt"/>
+        <line num="151" count="16" type="cond" truecount="2" falsecount="0"/>
+        <line num="152" count="7" type="stmt"/>
+        <line num="157" count="12" type="stmt"/>
+        <line num="160" count="9" type="stmt"/>
+        <line num="162" count="16" type="stmt"/>
+        <line num="170" count="2" type="stmt"/>
+        <line num="174" count="3" type="stmt"/>
+        <line num="176" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="177" count="1" type="stmt"/>
+        <line num="180" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="181" count="1" type="stmt"/>
+        <line num="182" count="3" type="stmt"/>
+        <line num="185" count="1" type="stmt"/>
+        <line num="187" count="2" type="stmt"/>
+        <line num="193" count="0" type="stmt"/>
+        <line num="197" count="21" type="stmt"/>
+        <line num="198" count="21" type="stmt"/>
+        <line num="202" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="203" count="3" type="stmt"/>
+        <line num="205" count="2" type="stmt"/>
+        <line num="210" count="3" type="stmt"/>
+        <line num="211" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="212" count="1" type="stmt"/>
+        <line num="214" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="215" count="0" type="stmt"/>
+        <line num="217" count="2" type="stmt"/>
+        <line num="229" count="31" type="cond" truecount="2" falsecount="0"/>
+        <line num="230" count="1" type="stmt"/>
+        <line num="232" count="30" type="stmt"/>
+        <line num="233" count="30" type="stmt"/>
+        <line num="234" count="30" type="stmt"/>
+        <line num="235" count="30" type="cond" truecount="2" falsecount="0"/>
+        <line num="236" count="5" type="stmt"/>
+        <line num="237" count="5" type="stmt"/>
+        <line num="247" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="248" count="2" type="stmt"/>
+        <line num="258" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="263" count="2" type="stmt"/>
+        <line num="267" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="268" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="269" count="0" type="stmt"/>
+        <line num="281" count="0" type="stmt"/>
+        <line num="287" count="1" type="stmt"/>
+        <line num="290" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="291" count="3" type="stmt"/>
+        <line num="292" count="4" type="stmt"/>
+        <line num="295" count="1" type="stmt"/>
+        <line num="311" count="30" type="stmt"/>
+        <line num="313" count="30" type="cond" truecount="2" falsecount="0"/>
+        <line num="314" count="5" type="stmt"/>
+        <line num="317" count="30" type="stmt"/>
+        <line num="321" count="19" type="stmt"/>
+        <line num="325" count="5" type="stmt"/>
+        <line num="327" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="328" count="1" type="stmt"/>
+        <line num="330" count="8" type="stmt"/>
+        <line num="337" count="15" type="stmt"/>
+        <line num="338" count="15" type="stmt"/>
+        <line num="339" count="23" type="cond" truecount="1" falsecount="1"/>
+        <line num="340" count="0" type="stmt"/>
+        <line num="342" count="23" type="cond" truecount="2" falsecount="0"/>
+        <line num="343" count="4" type="stmt"/>
+        <line num="345" count="19" type="stmt"/>
+        <line num="348" count="15" type="stmt"/>
+        <line num="352" count="2" type="stmt"/>
+        <line num="358" count="12" type="stmt"/>
+        <line num="369" count="2" type="stmt"/>
+        <line num="373" count="1" type="stmt"/>
+        <line num="374" count="0" type="stmt"/>
+        <line num="376" count="1" type="stmt"/>
+        <line num="377" count="8" type="stmt"/>
+        <line num="379" count="50" type="stmt"/>
+      </file>
+      <file name="createNode.js" path="/Users/adrianhelvik/Npm/@adrianhelvik/vdom/src/MixedDOM/createNode.js">
+        <metrics statements="9" coveredstatements="6" conditionals="6" coveredconditionals="3" methods="1" coveredmethods="1"/>
+        <line num="2" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="3" count="0" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="8" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="9" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="10" count="0" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="Patcher">
+      <metrics statements="8" coveredstatements="5" conditionals="3" coveredconditionals="1" methods="1" coveredmethods="1"/>
+      <file name="applyDiff.js" path="/Users/adrianhelvik/Npm/@adrianhelvik/vdom/src/Patcher/applyDiff.js">
+        <metrics statements="8" coveredstatements="5" conditionals="3" coveredconditionals="1" methods="1" coveredmethods="1"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="9" count="1" type="cond" truecount="1" falsecount="2"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="20" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="VirtualDOM">
+      <metrics statements="39" coveredstatements="36" conditionals="33" coveredconditionals="30" methods="5" coveredmethods="5"/>
+      <file name="createDiff.js" path="/Users/adrianhelvik/Npm/@adrianhelvik/vdom/src/VirtualDOM/createDiff.js">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="7" count="3" type="stmt"/>
+        <line num="9" count="3" type="stmt"/>
+      </file>
+      <file name="createElement.js" path="/Users/adrianhelvik/Npm/@adrianhelvik/vdom/src/VirtualDOM/createElement.js">
+        <metrics statements="4" coveredstatements="4" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="2" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="3" count="3" type="stmt"/>
+        <line num="6" count="9" type="stmt"/>
+        <line num="16" count="3" type="stmt"/>
+      </file>
+      <file name="diffChildren.js" path="/Users/adrianhelvik/Npm/@adrianhelvik/vdom/src/VirtualDOM/diffChildren.js">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+      </file>
+      <file name="diffNodes.js" path="/Users/adrianhelvik/Npm/@adrianhelvik/vdom/src/VirtualDOM/diffNodes.js">
+        <metrics statements="13" coveredstatements="10" conditionals="19" coveredconditionals="16" methods="1" coveredmethods="1"/>
+        <line num="4" count="11" type="cond" truecount="4" falsecount="0"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="8" count="10" type="cond" truecount="2" falsecount="0"/>
+        <line num="9" count="5" type="stmt"/>
+        <line num="18" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="27" count="4" type="cond" truecount="3" falsecount="1"/>
+        <line num="28" count="4" type="cond" truecount="4" falsecount="0"/>
+        <line num="29" count="2" type="stmt"/>
+        <line num="37" count="2" type="stmt"/>
+        <line num="41" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="42" count="0" type="stmt"/>
+        <line num="51" count="0" type="stmt"/>
+      </file>
+      <file name="diffProps.js" path="/Users/adrianhelvik/Npm/@adrianhelvik/vdom/src/VirtualDOM/diffProps.js">
+        <metrics statements="14" coveredstatements="14" conditionals="12" coveredconditionals="12" methods="1" coveredmethods="1"/>
+        <line num="4" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="5" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="7" count="6" type="stmt"/>
+        <line num="9" count="6" type="stmt"/>
+        <line num="10" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="19" count="6" type="stmt"/>
+        <line num="20" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="21" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="22" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="43" count="6" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>
