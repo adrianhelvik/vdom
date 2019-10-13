@@ -1,7 +1,8 @@
 {
   "name": "@adrianhelvik/vdom",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "module": "src/index.js",
   "author": "Adrian Helvik <adrian.helvik@specifique.no>",
   "license": "MIT",
   "devDependencies": {
