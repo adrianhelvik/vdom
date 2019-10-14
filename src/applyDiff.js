@@ -2,6 +2,8 @@ import document from '@adrianhelvik/fragdom'
 import createNode from './createNode.js'
 
 export default function applyDiff(container, diff) {
+  const pending = []
+
   if (container instanceof window.Element) {
     container = document.wrap(container)
   }
@@ -12,12 +14,13 @@ export default function applyDiff(container, diff) {
     const node = lookup(container, path)
 
     switch (action.type) {
-      case 'replace node':
+      case 'replace node': {
         node.childNodes[index].remove()
-        node.appendChild(createNode(action.node))
+        node.appendChild(createNode(action.node, pending))
         break
+      }
       case 'insert node':
-        node.appendChild(createNode(action.node))
+        node.appendChild(createNode(action.node, pending))
         break
       case 'remove node':
         node.childNodes[index].remove()
@@ -35,6 +38,8 @@ export default function applyDiff(container, diff) {
   }
 
   container.reconcile()
+
+  return pending
 }
 
 function lookup(node, path) {

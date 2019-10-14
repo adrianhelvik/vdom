@@ -2,7 +2,7 @@ import nodeTransformer from './nodeTransformer.js'
 import createElement from './createElement.js'
 import document from '@adrianhelvik/fragdom'
 
-export default function createNode(virtualNode) {
+export default function createNode(virtualNode, pending) {
   virtualNode = nodeTransformer(virtualNode)
 
   if (typeof virtualNode === 'number') {
@@ -22,9 +22,20 @@ export default function createNode(virtualNode) {
   }
 
   const node =
-    virtualNode.type === createElement.Fragment
+    typeof virtualNode.type === 'function'
+      ? document.createTextNode('')
+      : virtualNode.type === createElement.Fragment
       ? document.createFragment()
       : document.createElement(virtualNode.type)
+
+  if (typeof virtualNode.type === 'function') {
+    pending.push({
+      target: node,
+      virtualNode,
+    })
+
+    return node
+  }
 
   for (const key of Object.keys(virtualNode.props || {})) {
     if (key !== 'children') {
@@ -33,7 +44,7 @@ export default function createNode(virtualNode) {
   }
 
   for (const child of virtualNode.props.children) {
-    node.appendChild(createNode(child))
+    node.appendChild(createNode(child, pending))
   }
 
   return node

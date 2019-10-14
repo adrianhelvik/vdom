@@ -1,4 +1,5 @@
 import createElement from './createElement.js'
+import document from '@adrianhelvik/fragdom'
 import createDiff from './createDiff.js'
 import applyDiff from './applyDiff.js'
 
@@ -10,7 +11,7 @@ let render = template => {
 }
 
 beforeEach(() => {
-  container = document.createElement('div')
+  container = window.document.createElement('div')
 })
 
 describe('directly', () => {
@@ -151,5 +152,31 @@ describe('on child elements', () => {
     )
     applyDiff(container, diff)
     expect(container.innerHTML).toBe('<div></div>')
+  })
+
+  it('can track nodes that should be updated after the initial mount', () => {
+    const App = () => {}
+
+    const pending = applyDiff(
+      container,
+      createDiff(null, <App hello="world" />),
+    )
+
+    expect(pending).toEqual([
+      {
+        target: document.wrap(container).childNodes[0],
+        virtualNode: {
+          type: App,
+          key: undefined,
+          props: {
+            children: [],
+            hello: 'world',
+          },
+        },
+      },
+    ])
+
+    expect(pending[0].target.textContent).toBe('')
+    expect(pending[0].target.parentNode.tagName).toBe('DIV')
   })
 })
