@@ -2,10 +2,15 @@
 # yarn lockfile v1
 
 
-"@adrianhelvik/fragdom@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@adrianhelvik/fragdom/-/fragdom-2.0.0.tgz#43e8110cb41b3f23bbfcf3622e1af21ea1b84336"
-  integrity sha512-QRAeEqd5y66WM8X/yTrOe1vyPFI+Abu4q2XNWXIpXIDugLn1dwvdpkR1I1h3JwbfXymogdUL+OhWjpCHkGCjrg==
+"@adrianhelvik/fragdom@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@adrianhelvik/fragdom/-/fragdom-2.0.1.tgz#462424bb2f532513419034ced210123d6421a5d8"
+  integrity sha512-oz/4zcN+e3c4083OvXo0I/T7+1QtIwMziZ+ZCHykH0aL7KzGznYZQbqIgy4EWZqAUL3lXpE0i88e9hQPpZUX8A==
+
+"@adrianhelvik/mock@^3.3.2":
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/@adrianhelvik/mock/-/mock-3.3.2.tgz#6e6c00780f4f381f014582f2ba6f4bad66eca707"
+  integrity sha512-YSyzW9X6+gIJ9+nHvCBuLJjGlOb8qX+OuQnDpu/AJmmHSlf/vCktxlZFJSjVuy+OInZ0xsYYBcfwhnehpTkxLA==
 
 "@babel/cli@^7.6.2":
   version "7.6.2"
@@ -92,6 +97,18 @@
     "@babel/helper-hoist-variables" "^7.4.4"
     "@babel/traverse" "^7.4.4"
     "@babel/types" "^7.4.4"
+
+"@babel/helper-create-class-features-plugin@^7.5.5":
+  version "7.6.0"
+  resolved "https://registry.yarnpkg.com/@babel/helper-create-class-features-plugin/-/helper-create-class-features-plugin-7.6.0.tgz#769711acca889be371e9bc2eb68641d55218021f"
+  integrity sha512-O1QWBko4fzGju6VoVvrZg0RROCVifcLxiApnGP3OWfWzvxRZFCoBD81K5ur5e3bVY2Vf/5rIJm8cqPKn8HUJng==
+  dependencies:
+    "@babel/helper-function-name" "^7.1.0"
+    "@babel/helper-member-expression-to-functions" "^7.5.5"
+    "@babel/helper-optimise-call-expression" "^7.0.0"
+    "@babel/helper-plugin-utils" "^7.0.0"
+    "@babel/helper-replace-supers" "^7.5.5"
+    "@babel/helper-split-export-declaration" "^7.4.4"
 
 "@babel/helper-define-map@^7.5.5":
   version "7.5.5"
@@ -255,6 +272,14 @@
     "@babel/helper-plugin-utils" "^7.0.0"
     "@babel/helper-remap-async-to-generator" "^7.1.0"
     "@babel/plugin-syntax-async-generators" "^7.2.0"
+
+"@babel/plugin-proposal-class-properties@^7.5.5":
+  version "7.5.5"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-class-properties/-/plugin-proposal-class-properties-7.5.5.tgz#a974cfae1e37c3110e71f3c6a2e48b8e71958cd4"
+  integrity sha512-AF79FsnWFxjlaosgdi421vmYG6/jg79bVD0dpD44QdgobzHKuLZ6S3vl8la9qIeSwGi8i1fS0O1mfuDAAdo1/A==
+  dependencies:
+    "@babel/helper-create-class-features-plugin" "^7.5.5"
+    "@babel/helper-plugin-utils" "^7.0.0"
 
 "@babel/plugin-proposal-dynamic-import@^7.5.0":
   version "7.5.0"

@@ -5,3 +5,20 @@
 
 
 A virtual DOM library.
+
+
+## Plan
+- [ ] createDiff
+  - [ ] diff props
+    - [ ] new prop added
+    - [ ] existing prop removed
+    - [ ] prop retained
+  - [ ] diff children
+    - [ ] child added
+    - [ ] child removed
+    - [ ] child key changed
+  - [ ] diff nodes
+    - [ ] same type & key -> keep
+    - [ ] different type -> replace
+    - [ ] different key -> replace
+    - [ ] key moved -> move node

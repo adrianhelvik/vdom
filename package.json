@@ -6,6 +6,7 @@
   "author": "Adrian Helvik <adrian.helvik@specifique.no>",
   "license": "MIT",
   "devDependencies": {
+    "@adrianhelvik/mock": "^3.3.2",
     "@babel/cli": "^7.6.2",
     "@babel/core": "^7.6.2",
     "@babel/preset-env": "^7.6.2",
@@ -30,9 +31,11 @@
           "pragmaFrag": "createElement.Fragment"
         }
       ]
-    ]
+    ],
+    "plugins": ["@babel/plugin-proposal-class-properties"]
   },
   "dependencies": {
-    "@adrianhelvik/fragdom": "^2.0.1"
+    "@adrianhelvik/fragdom": "^2.0.1",
+    "@babel/plugin-proposal-class-properties": "^7.5.5"
   }
 }

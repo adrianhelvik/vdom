@@ -1,10 +1,13 @@
 import diffNodes from './diffNodes.js'
-import diffProps from './diffProps.js'
 
-export default function diff(prev, curr) {
+const previousDiffs = new WeakMap()
+
+export default function createDiff(id, newTemplate) {
+  const oldTemplate = previousDiffs.has(id) ? previousDiffs.get(id) : null
+
   const diff = []
 
-  diff.push(...diffNodes(prev, curr, [0]))
+  diff.push(...diffNodes(oldTemplate, newTemplate, [0]))
 
   return diff
 }

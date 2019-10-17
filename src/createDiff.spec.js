@@ -1,8 +1,8 @@
 import createElement from './createElement.js'
-import createDiff from './createDiff.js'
+import diffNodes from './diffNodes.js'
 
 it('can add a child', () => {
-  const diff = createDiff(<div />, <div>Hello world</div>)
+  const diff = diffNodes(<div />, <div>Hello world</div>, [0])
 
   expect(diff).toEqual([
     {
@@ -14,7 +14,7 @@ it('can add a child', () => {
 })
 
 it('can replace a node based on its key', () => {
-  const diff = createDiff(<div key="a" />, <div key="b" />)
+  const diff = diffNodes(<div key="a" />, <div key="b" />, [0])
 
   expect(diff).toEqual([
     { type: 'replace node', path: [0], node: <div key="b" /> },
@@ -22,7 +22,7 @@ it('can replace a node based on its key', () => {
 })
 
 it('removes the latter elements first', () => {
-  const diff = createDiff(
+  const diff = diffNodes(
     <div>
       <h1>Hello world</h1>
       <main>
@@ -30,6 +30,7 @@ it('removes the latter elements first', () => {
       </main>
     </div>,
     <div></div>,
+    [0],
   )
 
   expect(diff).toEqual([

@@ -1,8 +1,4 @@
-import createElement from './createElement.js'
-import mount from './mount.js'
-import {
-  registerNodeTransformer,
-  clearNodeTransformers,
-} from './nodeTransformer.js'
+import createDiff from './createDiff.js'
+import applyDiff from './applyDiff.js'
 
-export { registerNodeTransformer, clearNodeTransformers, createElement, mount }
+export { createDiff, applyDiff }
