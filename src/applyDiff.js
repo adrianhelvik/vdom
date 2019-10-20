@@ -2,11 +2,11 @@ import defaultComponentRendrer from './defaultComponentRendrer.js'
 import document from '@adrianhelvik/fragdom'
 import createNode from './createNode.js'
 
-export default function applyDiff(
-  container,
-  diff,
-  options = { async: false, componentRendrer: defaultComponentRendrer },
-) {
+export default function applyDiff(container, diff, options = {}) {
+  if (options.async === undefined) options.async = false
+  if (options.componentRendrer === undefined)
+    options.componentRendrer = defaultComponentRendrer
+
   const pendingComponents = []
   let async = Boolean(options.async)
 
