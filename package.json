@@ -1,6 +1,6 @@
 {
   "name": "@adrianhelvik/vdom",
-  "version": "1.0.8",
+  "version": "1.1.0",
   "main": "dist/index.js",
   "module": "src/index.js",
   "author": "Adrian Helvik <adrian.helvik@specifique.no>",
