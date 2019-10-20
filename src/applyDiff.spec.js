@@ -129,29 +129,30 @@ describe('on child elements', () => {
   })
 
   it('can remove multiple elements', () => {
-    applyDiff(
-      container,
-      createDiff(
-        null,
-        <div>
-          <h1>Hello world</h1>
-          <main>
-            <p>Foo bar</p>
-          </main>
-        </div>,
-      ),
-    )
-    const diff = createDiff(
-      <div>
-        <h1>Hello world</h1>
-        <main>
+    const diffA = createDiff(
+      null,
+      <container>
+        <first-child>Hello world</first-child>
+        <second-child>
           <p>Foo bar</p>
-        </main>
-      </div>,
-      <div />,
+        </second-child>
+      </container>,
     )
-    applyDiff(container, diff)
-    expect(container.innerHTML).toBe('<div></div>')
+
+    const diffB = createDiff(
+      <container>
+        <first-child>Hello world</first-child>
+        <second-child>
+          <p>Foo bar</p>
+        </second-child>
+      </container>,
+      <container />,
+    )
+
+    applyDiff(container, diffA)
+    applyDiff(container, diffB)
+
+    expect(container.innerHTML).toBe('<container></container>')
   })
 
   it('can track nodes that should be updated after the initial mount', () => {
@@ -179,4 +180,30 @@ describe('on child elements', () => {
     expect(pending[0].target.textContent).toBe('')
     expect(pending[0].target.parentNode.tagName).toBe('DIV')
   })
+})
+
+it('can set initial props', () => {
+  const diff = createDiff(null, <div class="foo" />)
+  applyDiff(container, diff)
+  expect(container.innerHTML).toBe('<div class="foo"></div>')
+})
+
+it('can add props', () => {
+  const diffA = createDiff(null, <div />)
+  const diffB = createDiff(<div />, <div class="foo" />)
+
+  applyDiff(container, diffA)
+  applyDiff(container, diffB)
+
+  expect(container.innerHTML).toBe('<div class="foo"></div>')
+})
+
+it('can remove props', () => {
+  const diffA = createDiff(null, <div class="foo" />)
+  const diffB = createDiff(<div class="foo" />, <div />)
+
+  applyDiff(container, diffA)
+  applyDiff(container, diffB)
+
+  expect(container.innerHTML).toBe('<div></div>')
 })

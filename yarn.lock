@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@adrianhelvik/fragdom@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@adrianhelvik/fragdom/-/fragdom-2.0.0.tgz#43e8110cb41b3f23bbfcf3622e1af21ea1b84336"
-  integrity sha512-QRAeEqd5y66WM8X/yTrOe1vyPFI+Abu4q2XNWXIpXIDugLn1dwvdpkR1I1h3JwbfXymogdUL+OhWjpCHkGCjrg==
+"@adrianhelvik/fragdom@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@adrianhelvik/fragdom/-/fragdom-2.0.2.tgz#334f0ef47bacdc765fb168778c5e0776897b98a9"
+  integrity sha512-tl2ghHzaJ5vlzkTvCo1xSO3yHOwDsrZBC9xuCaHIYA9APtjXuWirVfl7SV92Azyu0kwCc7rsg3T24uNSv05uwA==
 
 "@babel/cli@^7.6.2":
   version "7.6.2"

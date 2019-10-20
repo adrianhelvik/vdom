@@ -39,7 +39,7 @@ export default function createNode(virtualNode, pending) {
 
   for (const key of Object.keys(virtualNode.props || {})) {
     if (key !== 'children') {
-      node.setAttribute(key, props[key])
+      node.setAttribute(key, virtualNode.props[key])
     }
   }
 

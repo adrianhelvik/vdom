@@ -3,6 +3,7 @@ import createNode from './createNode.js'
 
 export default function applyDiff(container, diff) {
   const pending = []
+  let async = true
 
   if (container instanceof window.Element) {
     container = document.wrap(container)
@@ -24,7 +25,12 @@ export default function applyDiff(container, diff) {
         break
       case 'remove node':
         node.childNodes[index].remove()
-        node.reconcile() // XXX: Not needed when fragdom issue #1 is resolved
+        break
+      case 'add prop':
+        node.childNodes[index].setAttribute(action.key, action.value)
+        break
+      case 'remove prop':
+        node.childNodes[index].removeAttribute(action.key)
         break
       default:
         throw Error(
