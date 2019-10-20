@@ -1,10 +1,7 @@
-import nodeTransformer from './nodeTransformer.js'
 import createElement from './createElement.js'
 import document from '@adrianhelvik/fragdom'
 
 export default function createNode(virtualNode, pending) {
-  virtualNode = nodeTransformer(virtualNode)
-
   if (typeof virtualNode === 'number') {
     return document.createTextNode(String(virtualNode))
   }
