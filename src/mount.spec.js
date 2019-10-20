@@ -1,5 +1,8 @@
 import createElement from './createElement.js'
+import fragdom from '@adrianhelvik/fragdom'
 import mount from './mount.js'
+
+const $ = document.querySelector.bind(document)
 
 beforeEach(() => {
   document.body.innerHTML = ''
@@ -16,10 +19,10 @@ it('can mount an element', () => {
       </h1>
       <main>Foo bar</main>
     </div>,
-    document.querySelector('#root'),
+    $('#root'),
   )
 
-  expect(document.querySelector('#root').innerHTML).toBe(
+  expect($('#root').innerHTML).toBe(
     [
       '<div>',
       /**/ '<h1>Hello <strong>world</strong></h1>',
@@ -38,10 +41,8 @@ it('can mount fragment nodes', () => {
       Foo <>bar</>
       <b>Baz</b>
     </>,
-    document.querySelector('#root'),
+    $('#root'),
   )
 
-  expect(document.querySelector('#root').innerHTML).toBe(
-    ['<h1>Hello world</h1>', 'Foo bar', '<b>Baz</b>'].join(''),
-  )
+  expect($('#root').innerHTML).toBe('<h1>Hello world</h1>Foo bar<b>Baz</b>')
 })

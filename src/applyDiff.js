@@ -1,8 +1,13 @@
+import defaultComponentRendrer from './defaultComponentRendrer.js'
 import document from '@adrianhelvik/fragdom'
 import createNode from './createNode.js'
 
-export default function applyDiff(container, diff, options = { async: false }) {
-  const pending = []
+export default function applyDiff(
+  container,
+  diff,
+  options = { async: false, componentRendrer: defaultComponentRendrer },
+) {
+  const pendingComponents = []
   let async = Boolean(options.async)
 
   if (container instanceof window.Element) {
@@ -17,10 +22,10 @@ export default function applyDiff(container, diff, options = { async: false }) {
     switch (action.type) {
       case 'replace node':
         node.childNodes[index].remove()
-        node.appendChild(createNode(action.node, pending))
+        node.appendChild(createNode(action.node, pendingComponents))
         break
       case 'insert node':
-        node.appendChild(createNode(action.node, pending))
+        node.appendChild(createNode(action.node, pendingComponents))
         break
       case 'remove node':
         node.childNodes[index].remove()
@@ -50,7 +55,11 @@ export default function applyDiff(container, diff, options = { async: false }) {
     container.reconcile()
   }
 
-  return pending
+  for (const { target, virtualNode } of pendingComponents) {
+    options.componentRendrer(target, virtualNode, options)
+  }
+
+  return pendingComponents
 }
 
 function lookup(node, path) {

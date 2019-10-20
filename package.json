@@ -33,6 +33,6 @@
     ]
   },
   "dependencies": {
-    "@adrianhelvik/fragdom": "^2.0.2"
+    "@adrianhelvik/fragdom": "^2.1.0"
   }
 }

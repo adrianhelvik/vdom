@@ -1,5 +1,5 @@
 import createElement from './createElement.js'
-import document from '@adrianhelvik/fragdom'
+import fragdom from '@adrianhelvik/fragdom'
 import createDiff from './createDiff.js'
 import applyDiff from './applyDiff.js'
 
@@ -171,7 +171,7 @@ describe('on child elements', () => {
 
     expect(pending).toEqual([
       {
-        target: document.wrap(container).childNodes[0],
+        target: fragdom.wrap(container).childNodes[0],
         virtualNode: {
           type: App,
           key: undefined,
@@ -183,7 +183,6 @@ describe('on child elements', () => {
       },
     ])
 
-    expect(pending[0].target.textContent).toBe('')
     expect(pending[0].target.parentNode.tagName).toBe('DIV')
   })
 })
@@ -242,4 +241,25 @@ it('will not apply a diff asynchronously if a prop is removed', () => {
   applyDiff(container, diffB, { async: true })
 
   expect(container.innerHTML).toBe('<div></div>')
+})
+
+describe('components', () => {
+  it('renders the component function by default', () => {
+    const App = () => <div>Hello world</div>
+    const diff = createDiff(null, <App />)
+
+    applyDiff(container, diff)
+
+    expect(container.innerHTML).toBe('<div>Hello world</div>')
+  })
+
+  xit('can provide a componentRendrer', () => {
+    const App = () => <div>Hello world</div>
+    const diff = createDiff(null, <App />)
+    const updates = applyDiff(container, diff, {
+      componentRendrer(node, vnode) {
+        node.parentNode
+      },
+    })
+  })
 })

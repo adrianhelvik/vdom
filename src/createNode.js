@@ -1,17 +1,21 @@
 import createElement from './createElement.js'
-import document from '@adrianhelvik/fragdom'
+import fragdom from '@adrianhelvik/fragdom'
 
-export default function createNode(virtualNode, pending) {
+export default function createNode(virtualNode, pendingComponents) {
+  if (!Array.isArray(pendingComponents)) {
+    throw Error('Expected "pendingComponents" to be an array')
+  }
+
   if (typeof virtualNode === 'number') {
-    return document.createTextNode(String(virtualNode))
+    return fragdom.createTextNode(String(virtualNode))
   }
 
   if (typeof virtualNode === 'string') {
-    return document.createTextNode(virtualNode)
+    return fragdom.createTextNode(virtualNode)
   }
 
   if (virtualNode === null) {
-    return document.createFragment()
+    return fragdom.createFragment()
   }
 
   if (virtualNode === undefined) {
@@ -20,13 +24,13 @@ export default function createNode(virtualNode, pending) {
 
   const node =
     typeof virtualNode.type === 'function'
-      ? document.createTextNode('')
+      ? fragdom.createFragment()
       : virtualNode.type === createElement.Fragment
-      ? document.createFragment()
-      : document.createElement(virtualNode.type)
+      ? fragdom.createFragment()
+      : fragdom.createElement(virtualNode.type)
 
   if (typeof virtualNode.type === 'function') {
-    pending.push({
+    pendingComponents.push({
       target: node,
       virtualNode,
     })
@@ -41,7 +45,7 @@ export default function createNode(virtualNode, pending) {
   }
 
   for (const child of virtualNode.props.children) {
-    node.appendChild(createNode(child, pending))
+    node.appendChild(createNode(child, pendingComponents))
   }
 
   return node
