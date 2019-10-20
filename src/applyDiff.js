@@ -1,9 +1,9 @@
 import document from '@adrianhelvik/fragdom'
 import createNode from './createNode.js'
 
-export default function applyDiff(container, diff) {
+export default function applyDiff(container, diff, options = { async: false }) {
   const pending = []
-  let async = true
+  let async = Boolean(options.async)
 
   if (container instanceof window.Element) {
     container = document.wrap(container)
@@ -15,11 +15,10 @@ export default function applyDiff(container, diff) {
     const node = lookup(container, path)
 
     switch (action.type) {
-      case 'replace node': {
+      case 'replace node':
         node.childNodes[index].remove()
         node.appendChild(createNode(action.node, pending))
         break
-      }
       case 'insert node':
         node.appendChild(createNode(action.node, pending))
         break
@@ -27,9 +26,11 @@ export default function applyDiff(container, diff) {
         node.childNodes[index].remove()
         break
       case 'add prop':
+        async = false
         node.childNodes[index].setAttribute(action.key, action.value)
         break
       case 'remove prop':
+        async = false
         node.childNodes[index].removeAttribute(action.key)
         break
       default:
@@ -43,7 +44,11 @@ export default function applyDiff(container, diff) {
     }
   }
 
-  container.reconcile()
+  if (async) {
+    container.reconcileAsync()
+  } else {
+    container.reconcile()
+  }
 
   return pending
 }

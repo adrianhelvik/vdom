@@ -3,6 +3,8 @@ import document from '@adrianhelvik/fragdom'
 import createDiff from './createDiff.js'
 import applyDiff from './applyDiff.js'
 
+jest.useFakeTimers()
+
 let container
 let prev = null
 let render = template => {
@@ -12,6 +14,10 @@ let render = template => {
 
 beforeEach(() => {
   container = window.document.createElement('div')
+})
+
+afterEach(() => {
+  jest.runAllTimers()
 })
 
 describe('directly', () => {
@@ -204,6 +210,36 @@ it('can remove props', () => {
 
   applyDiff(container, diffA)
   applyDiff(container, diffB)
+
+  expect(container.innerHTML).toBe('<div></div>')
+})
+
+it('can apply a diff asynchronously', done => {
+  const diff = createDiff(null, <div />)
+  applyDiff(container, diff, { async: true })
+  expect(container.innerHTML).toBe('')
+  requestAnimationFrame(() => {
+    expect(container.innerHTML).toBe('<div></div>')
+    done()
+  })
+})
+
+it('will not apply a diff asynchronously if a prop is changed', () => {
+  const diffA = createDiff(null, <div />)
+  const diffB = createDiff(<div />, <div class="foo" />)
+
+  applyDiff(container, diffA)
+  applyDiff(container, diffB, { async: true })
+
+  expect(container.innerHTML).toBe('<div class="foo"></div>')
+})
+
+it('will not apply a diff asynchronously if a prop is removed', () => {
+  const diffA = createDiff(null, <div class="foo" />)
+  const diffB = createDiff(<div class="foo" />, <div />)
+
+  applyDiff(container, diffA)
+  applyDiff(container, diffB, { async: true })
 
   expect(container.innerHTML).toBe('<div></div>')
 })
