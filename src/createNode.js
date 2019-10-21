@@ -23,7 +23,7 @@ export default function createNode(virtualNode, pendingComponents) {
   }
 
   if (typeof virtualNode === 'object' && virtualNode.type === undefined) {
-    throw Error('Pass null, and not undefined to create empty nodes')
+    throw Error(`Invalid virtual node type: ${typeof virtualNode.type}`)
   }
 
   const node =
