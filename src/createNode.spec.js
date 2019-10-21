@@ -6,7 +6,7 @@ it('creates an empty fragment if the value is null', () => {
 })
 
 it('throws if the value is undefined', () => {
-  expect(() => createNode(undefined, [])).toThrow(
+  expect(() => createNode({ type: undefined }, [])).toThrow(
     'Pass null, and not undefined to create empty nodes',
   )
 })

@@ -18,7 +18,11 @@ export default function createNode(virtualNode, pendingComponents) {
     return fragdom.createFragment()
   }
 
-  if (virtualNode === undefined) {
+  if (typeof virtualNode === 'boolean') {
+    return fragdom.createFragment()
+  }
+
+  if (typeof virtualNode === 'object' && virtualNode.type === undefined) {
     throw Error('Pass null, and not undefined to create empty nodes')
   }
 

@@ -41,3 +41,7 @@ test('create fragment element', () => {
     },
   })
 })
+
+it('throws if type === undefined', () => {
+  expect(() => createElement()).toThrow('undefined')
+})
