@@ -1,3 +1,4 @@
+import defaultComponentRendrer from './defaultComponentRendrer'
 import createElement from './createElement.js'
 import fragdom from '@adrianhelvik/fragdom'
 import createDiff from './createDiff.js'
@@ -253,13 +254,18 @@ describe('components', () => {
     expect(container.innerHTML).toBe('<div>Hello world</div>')
   })
 
-  xit('can provide a componentRendrer', () => {
+  it('can provide a componentRendrer', () => {
     const App = () => <div>Hello world</div>
     const diff = createDiff(null, <App />)
-    const updates = applyDiff(container, diff, {
-      componentRendrer(node, vnode) {
-        node.parentNode
+    let ranCustomRendrer = false
+
+    applyDiff(container, diff, {
+      componentRendrer(node, vnode, options) {
+        ranCustomRendrer = true
+        return defaultComponentRendrer(node, vnode, options)
       },
     })
+
+    expect(ranCustomRendrer).toBe(true)
   })
 })
