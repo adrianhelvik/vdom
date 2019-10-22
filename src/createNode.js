@@ -22,6 +22,16 @@ export default function createNode(virtualNode, pendingComponents) {
     return fragdom.createFragment()
   }
 
+  if (Array.isArray(virtualNode)) {
+    const node = fragdom.createFragment()
+
+    for (const child of virtualNode) {
+      node.appendChild(createNode(child, pendingComponents))
+    }
+
+    return node
+  }
+
   if (typeof virtualNode === 'object' && virtualNode.type === undefined) {
     throw Error(`Invalid virtual node type: ${typeof virtualNode.type}`)
   }
@@ -42,14 +52,22 @@ export default function createNode(virtualNode, pendingComponents) {
     return node
   }
 
-  for (const key of Object.keys(virtualNode.props || {})) {
-    if (key !== 'children') {
-      node.setAttribute(key, virtualNode.props[key])
+  if (virtualNode.props) {
+    for (const key of Object.keys(virtualNode.props)) {
+      if (key !== 'children') {
+        node.setAttribute(key, virtualNode.props[key])
+      }
     }
-  }
 
-  for (const child of virtualNode.props.children) {
-    node.appendChild(createNode(child, pendingComponents))
+    if (Array.isArray(virtualNode.props.children)) {
+      for (const child of virtualNode.props.children) {
+        node.appendChild(createNode(child, pendingComponents))
+      }
+    } else {
+      node.appendChild(
+        createNode(virtualNode.props.children, pendingComponents),
+      )
+    }
   }
 
   return node
