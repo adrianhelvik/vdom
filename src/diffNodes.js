@@ -38,7 +38,7 @@ export default function diffNodes(prev, curr, path = []) {
     }
   }
 
-  if (typeof prev !== typeof curr) {
+  if (prev !== curr) {
     return [
       {
         type: 'replace node',

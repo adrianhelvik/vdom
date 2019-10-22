@@ -37,3 +37,11 @@ it('removes the latter elements first', () => {
     { type: 'remove node', path: [0, 0] },
   ])
 })
+
+it('can replace a text node', () => {
+  const diff = createDiff(<div>Hello world</div>, <div>Foo bar</div>)
+
+  expect(diff).toEqual([
+    { type: 'replace node', path: [0, 0], node: 'Foo bar' },
+  ])
+})
