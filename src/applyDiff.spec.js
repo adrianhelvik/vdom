@@ -214,6 +214,16 @@ it('can remove props', () => {
   expect(container.innerHTML).toBe('<div></div>')
 })
 
+it('can change text', () => {
+  const diffA = createDiff(null, <div>Hello world</div>)
+  const diffB = createDiff(<div>Hello world</div>, <div>Foo bar</div>)
+
+  applyDiff(container, diffA)
+  applyDiff(container, diffB)
+
+  expect(container.innerHTML).toBe('<div>Foo bar</div>')
+})
+
 it('can apply a diff asynchronously', done => {
   const diff = createDiff(null, <div />)
   applyDiff(container, diff, { async: true })
