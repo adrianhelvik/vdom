@@ -1,9 +1,9 @@
 import diffProps from './diffProps.js'
 
-test('add prop', () => {
+test('set prop', () => {
   const diff = diffProps({}, { class: 'foo' })
 
-  expect(diff).toEqual([{ type: 'add prop', key: 'class', value: 'foo' }])
+  expect(diff).toEqual([{ type: 'set prop', key: 'class', value: 'foo' }])
 })
 
 test('remove prop', () => {
@@ -12,10 +12,10 @@ test('remove prop', () => {
   expect(diff).toEqual([{ type: 'remove prop', key: 'class' }])
 })
 
-test('update prop', () => {
+test('set prop', () => {
   const diff = diffProps({ class: 'foo' }, { class: 'bar' })
 
-  expect(diff).toEqual([{ type: 'update prop', key: 'class', value: 'bar' }])
+  expect(diff).toEqual([{ type: 'set prop', key: 'class', value: 'bar' }])
 })
 
 test('retain prop', () => {

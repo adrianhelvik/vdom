@@ -23,7 +23,7 @@ export default function diffProps(prev, curr, path) {
           diff.push(...diffChildren(prev[key], curr[key], path))
         } else {
           diff.push({
-            type: 'update prop',
+            type: 'set prop',
             key,
             value: curr[key],
             path,
@@ -32,7 +32,7 @@ export default function diffProps(prev, curr, path) {
       }
     } else {
       diff.push({
-        type: 'add prop',
+        type: 'set prop',
         key,
         value: curr[key],
         path,

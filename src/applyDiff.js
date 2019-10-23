@@ -30,7 +30,7 @@ export default function applyDiff(container, diff, options = {}) {
       case 'remove node':
         node.childNodes[index].remove()
         break
-      case 'add prop':
+      case 'set prop':
         async = false
         node.childNodes[index].setAttribute(action.key, action.value)
         break
