@@ -58,3 +58,15 @@ it('can create an undefined child', () => {
   const actual = createNode(undefined, [])
   expect(actual).toEqual(fragdom.createFragment())
 })
+
+it('assigns createElement to components', () => {
+  const actual = createNode({ type: () => {} }, [])
+  expect(typeof actual.setAttribute).toBe('function')
+})
+
+it('can set attributes for components', () => {
+  const node = createNode({ type: () => {} }, [])
+  node.props = {}
+  node.setAttribute('foo', 'bar')
+  expect(node.props.foo).toBe('bar')
+})
