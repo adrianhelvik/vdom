@@ -14,7 +14,7 @@ export default function createNode(virtualNode, pendingComponents) {
     return fragdom.createTextNode(virtualNode)
   }
 
-  if (virtualNode === null) {
+  if (virtualNode == null) {
     return fragdom.createFragment()
   }
 

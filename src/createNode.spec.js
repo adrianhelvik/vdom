@@ -53,3 +53,8 @@ it('can create child nodes from non-array children', () => {
 
   expect(actual).toEqual(expected)
 })
+
+it('can create an undefined child', () => {
+  const actual = createNode(undefined, [])
+  expect(actual).toEqual(fragdom.createFragment())
+})
