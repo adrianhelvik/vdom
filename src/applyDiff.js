@@ -21,8 +21,10 @@ export default function applyDiff(container, diff, options = {}) {
 
     switch (action.type) {
       case 'replace node':
-        node.childNodes[index].remove()
-        node.appendChild(createNode(action.node, pendingComponents))
+        node.replaceChild(
+          createNode(action.node, pendingComponents),
+          node.childNodes[index],
+        )
         break
       case 'insert node':
         node.appendChild(createNode(action.node, pendingComponents))

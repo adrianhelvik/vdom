@@ -279,3 +279,90 @@ describe('components', () => {
     expect(ranCustomRendrer).toBe(true)
   })
 })
+
+describe('bugfix', () => {
+  test('creates the correct fragdom', () => {
+    const diffA = createDiff(
+      null,
+      <>
+        {'1'}
+        {''}
+        {'2'}
+      </>,
+    )
+
+    const diffB = createDiff(
+      <>
+        {'1'}
+        {''}
+        {'2'}
+      </>,
+      <>
+        {'1'}
+        {'Hello'}
+        {'2'}
+      </>,
+    )
+
+    expect(diffB).toEqual([
+      {
+        type: 'replace node',
+        node: 'Hello',
+        path: [0, 1],
+      },
+    ])
+
+    applyDiff(container, diffA)
+    applyDiff(container, diffB)
+
+    expect(fragdom.wrap(container).debug()).toBe(
+      [
+        /************************************/
+        '<div>',
+        '  <>',
+        '    1',
+        '    Hello',
+        '    2',
+        '  </>',
+        '</div>',
+      ].join('\n'),
+    )
+  })
+
+  test('creates the correct html', () => {
+    const diffA = createDiff(
+      null,
+      <>
+        {'1'}
+        {''}
+        {'2'}
+      </>,
+    )
+
+    const diffB = createDiff(
+      <>
+        {'1'}
+        {''}
+        {'2'}
+      </>,
+      <>
+        {'1'}
+        Hello
+        {'2'}
+      </>,
+    )
+
+    expect(diffB).toEqual([
+      {
+        type: 'replace node',
+        node: 'Hello',
+        path: [0, 1],
+      },
+    ])
+
+    applyDiff(container, diffA)
+    applyDiff(container, diffB)
+
+    expect(container.innerHTML).toBe('1Hello2')
+  })
+})
