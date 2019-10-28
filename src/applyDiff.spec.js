@@ -366,3 +366,82 @@ describe('bugfix', () => {
     expect(container.innerHTML).toBe('1Hello2')
   })
 })
+
+describe('replace child bugfix', () => {
+  test('bugfix', () => {
+    const root = document.createElement('div')
+
+    const diffA = createDiff(
+      null,
+      <>
+        <>
+          {''}
+          {'1'}
+          {'2'}
+          {'3'}
+        </>
+      </>,
+    )
+
+    const diffB = createDiff(
+      <>
+        <>
+          {''}
+          {'1'}
+          {'2'}
+          {'3'}
+        </>
+      </>,
+      <>
+        <>
+          {'Hello'}
+          {'1'}
+          {'2'}
+          {'3'}
+        </>
+      </>,
+    )
+
+    applyDiff(root, diffA)
+    applyDiff(root, diffB)
+
+    expect(root.innerHTML).toBe('Hello123')
+  })
+
+  test('bugfix', () => {
+    const root = document.createElement('div')
+
+    const diffA = {
+      args: [
+        null,
+        {
+          type: createElement.Fragment,
+          props: { children: ['', '1', '2', '3'] },
+        },
+      ],
+      return: [
+        {
+          type: 'insert node',
+          node: {
+            type: createElement.Fragment,
+            props: { children: ['', '1', '2', '3'] },
+          },
+          path: [0],
+        },
+      ],
+    }
+
+    const diffB = {
+      args: [
+        { props: { children: ['', '1', '2', '3'] } },
+        { props: { children: ['Hello', '1', '2', '3'] } },
+      ],
+      return: [{ type: 'replace node', node: 'Hello', path: [0, 0] }],
+    }
+
+    applyDiff(root, diffA.return)
+    applyDiff(root, diffB.return)
+
+    expect(root.innerHTML).toBe('Hello123')
+  })
+})
