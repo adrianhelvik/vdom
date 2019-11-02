@@ -272,11 +272,45 @@ describe('components', () => {
     applyDiff(container, diff, {
       componentRendrer(node, vnode, options) {
         ranCustomRendrer = true
-        return defaultComponentRendrer(node, vnode, options)
+        defaultComponentRendrer(node, vnode, options)
       },
     })
 
     expect(ranCustomRendrer).toBe(true)
+  })
+
+  it('can unmount custom components', () => {
+    const App = () => <div>Hello world</div>
+    let unmounted = false
+
+    {
+      const diff = createDiff(null, <App />)
+
+      applyDiff(container, diff, {
+        componentRendrer(node, vnode, options) {
+          defaultComponentRendrer(node, vnode, options)
+          return () => {
+            unmounted = true
+          }
+        },
+      })
+    }
+
+    expect(unmounted).toBe(false)
+
+    {
+      const diff = createDiff(<App />, <div />)
+      applyDiff(container, diff, {
+        componentRendrer(node, vnode, options) {
+          defaultComponentRendrer(node, vnode, options)
+          return () => {
+            unmounted = true
+          }
+        },
+      })
+    }
+
+    expect(unmounted).toBe(true)
   })
 })
 

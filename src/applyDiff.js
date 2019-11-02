@@ -2,6 +2,8 @@ import defaultComponentRendrer from './defaultComponentRendrer.js'
 import document from '@adrianhelvik/fragdom'
 import createNode from './createNode.js'
 
+const unmounters = new WeakMap()
+
 export default function applyDiff(container, diff, options = {}) {
   if (options.async === undefined) options.async = false
   if (options.componentRendrer === undefined)
@@ -21,6 +23,7 @@ export default function applyDiff(container, diff, options = {}) {
 
     switch (action.type) {
       case 'replace node':
+        unmountComponentAtNode(node.childNodes[index])
         node.replaceChild(
           createNode(action.node, pendingComponents),
           node.childNodes[index],
@@ -30,6 +33,7 @@ export default function applyDiff(container, diff, options = {}) {
         node.appendChild(createNode(action.node, pendingComponents))
         break
       case 'remove node':
+        unmountComponentAtNode(node.childNodes[index])
         node.childNodes[index].remove()
         break
       case 'set prop':
@@ -58,7 +62,11 @@ export default function applyDiff(container, diff, options = {}) {
   }
 
   for (const { target, virtualNode } of pendingComponents) {
-    options.componentRendrer(target, virtualNode, options)
+    const unmount = options.componentRendrer(target, virtualNode, options)
+
+    if (typeof unmount === 'function') {
+      unmounters.set(target, unmount)
+    }
   }
 
   return pendingComponents
@@ -69,4 +77,12 @@ function lookup(node, path) {
     return node
   }
   return lookup(node.childNodes[path[0]], path.slice(1))
+}
+
+function unmountComponentAtNode(node) {
+  const unmount = unmounters.get(node)
+
+  if (typeof unmount === 'function') {
+    unmount()
+  }
 }
