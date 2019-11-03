@@ -3,6 +3,8 @@ import createElement from './createElement'
 import createDiff from './createDiff'
 import applyDiff from './applyDiff'
 
+const { Fragment } = createElement
+
 const prevTemplates = new WeakMap()
 const mount = (curr, target) => {
   let prev = prevTemplates.get(target)
@@ -14,7 +16,7 @@ const mount = (curr, target) => {
   applyDiff(target, diff)
 }
 
-test('repro', () => {
+test('repro 1', () => {
   const root = document.createElement('div')
 
   mount([<div class="todoName">By "{''}"</div>], root)

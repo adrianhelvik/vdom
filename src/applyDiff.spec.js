@@ -7,6 +7,7 @@ import applyDiff from './applyDiff.js'
 jest.useFakeTimers()
 
 let container
+let fragContainer
 let prev = null
 let render = template => {
   applyDiff(container, createDiff(prev, template))
@@ -15,6 +16,7 @@ let render = template => {
 
 beforeEach(() => {
   container = window.document.createElement('div')
+  fragContainer = fragdom.wrap(container)
 })
 
 afterEach(() => {
@@ -33,6 +35,32 @@ describe('directly', () => {
     applyDiff(container, createDiff(<div />, <span />))
 
     expect(container.innerHTML).toBe('<span></span>')
+  })
+
+  it('can replace a text node inside an element in a fragment', () => {
+    applyDiff(container, createDiff(null, [<div>Hi "{'a'}"</div>]))
+    let d
+    applyDiff(
+      container,
+      (d = createDiff(
+        <>
+          <div>Hi "{'a'}"</div>
+        </>,
+        <>
+          <div>Hi "{'b'}"</div>
+        </>,
+      )),
+    )
+    expect(
+      fragContainer.childNodes[0].childNodes[0].childNodes[1].textContent,
+    ).toBe('b')
+
+    try {
+      expect(container.innerHTML).toBe('<div>Hi "b"</div>')
+    } catch (e) {
+      e.message = `[caused by fragdom] ${e.message}`
+      throw e
+    }
   })
 
   it('can remove an element', () => {

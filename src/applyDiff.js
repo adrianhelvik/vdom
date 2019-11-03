@@ -22,13 +22,14 @@ export default function applyDiff(container, diff, options = {}) {
     const node = lookup(container, path)
 
     switch (action.type) {
-      case 'replace node':
+      case 'replace node': {
         unmountComponentAtNode(node.childNodes[index])
-        node.replaceChild(
-          createNode(action.node, pendingComponents),
-          node.childNodes[index],
-        )
+        const newChild = createNode(action.node, pendingComponents)
+        const oldChild = node.childNodes[index]
+
+        node.replaceChild(newChild, oldChild)
         break
+      }
       case 'insert node':
         node.appendChild(createNode(action.node, pendingComponents))
         break
