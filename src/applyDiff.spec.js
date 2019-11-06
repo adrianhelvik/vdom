@@ -214,6 +214,29 @@ describe('on child elements', () => {
 
     expect(pending[0].target.parentNode.tagName).toBe('DIV')
   })
+
+  it('can replace a text node with false', () => {
+    const diffA = createDiff(null, <div>Hello</div>)
+    const diffB = createDiff(<div>Hello</div>, <div>{false}</div>)
+
+    applyDiff(container, diffA)
+    applyDiff(container, diffB)
+
+    expect(diffB).toEqual([{ type: 'replace node', node: false, path: [0, 0] }])
+
+    expect(fragContainer.debug().split('\n')).toEqual([
+      /************************/
+      '<div>',
+      '  <div>',
+      '    <></>',
+      '  </div>',
+      '</div>',
+    ])
+
+    fragdomError(() => {
+      expect(container.innerHTML).toBe('<div></div>')
+    })
+  })
 })
 
 it('can set initial props', () => {
@@ -507,3 +530,12 @@ describe('replace child bugfix', () => {
     expect(root.innerHTML).toBe('Hello123')
   })
 })
+
+function fragdomError(fn) {
+  try {
+    fn()
+  } catch (e) {
+    e.message = `[Caused by Fragdom] ${e.message}`
+    throw e
+  }
+}
